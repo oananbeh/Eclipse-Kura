@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+   Copyright (c) 2017, 2021 Eurotech and/or its affiliates and others
+
+   This program and the accompanying materials are made
+   available under the terms of the Eclipse Public License 2.0
+   which is available at https://www.eclipse.org/legal/epl-2.0/
+ 
+	SPDX-License-Identifier: EPL-2.0
+	
+	Contributors:
+	 Eurotech
+
+-->
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.2.0" activate="activate" configuration-policy="require" deactivate="deactivate" enabled="true" immediate="true" modified="updated" name="org.eclipse.kura.http.server.manager.HttpService">
+   <implementation class="org.eclipse.kura.http.server.manager.HttpService"/>
+   <property name="service.pid" type="String" value="org.eclipse.kura.http.server.manager.HttpService"/>
+   <service>
+       <provide interface="org.eclipse.kura.configuration.ConfigurableComponent"/>
+       <provide interface="org.osgi.service.event.EventHandler"/>
+   </service>
+
+   <reference name="SystemService"
+              bind="setSystemService"
+              cardinality="1..1"
+              policy="static"
+              interface="org.eclipse.kura.system.SystemService"/>
+   <reference name="KeystoreService"
+           policy="static"
+           policy-option="greedy"
+           bind="setKeystoreService"
+           cardinality="0..1"
+           interface="org.eclipse.kura.security.keystore.KeystoreService"/>
+   <property name="kura.ui.service.hide" type="Boolean" value="true"/>
+   <property name="event.topics" type="String">org/eclipse/kura/security/keystore/KeystoreChangedEvent/KEYSTORE_CHANGED</property>
+</scr:component>
